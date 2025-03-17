@@ -5,7 +5,7 @@ import '../../../bloc/category/category_bloc.dart';
 import '../../../bloc/category/category_event.dart';
 import '../../../bloc/category/category_state.dart';
 import '../../../models/category_model.dart';
-
+import 'package:logger/logger.dart';
 
 class CategoryScreen extends StatelessWidget {
   @override
@@ -22,8 +22,12 @@ class CategoryScreen extends StatelessWidget {
               itemCount: state.categories.length,
               itemBuilder: (context, index) {
                 final category = state.categories[index];
+                final Logger logger = Logger();
+                logger.d(
+                  "Rendering category: ${category.name} - Type: ${category.type}",
+                );
                 return ListTile(
-                  leading: Text(category.icon, style: TextStyle(fontSize: 24)),
+                  leading: Text(category.icon ?? "📌", style: TextStyle(fontSize: 24)),
                   title: Text(category.name),
                   subtitle: Text(category.type.toUpperCase()),
                   trailing: Row(
@@ -64,10 +68,11 @@ class CategoryScreen extends StatelessWidget {
   void _showCategoryFormDialog(BuildContext context, {Category? category}) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(category == null ? "Add Category" : "Edit Category"),
-        content: CategoryFormDialog(category: category),
-      ),
+      builder:
+          (context) => AlertDialog(
+            title: Text(category == null ? "Add Category" : "Edit Category"),
+            content: CategoryFormDialog(category: category),
+          ),
     );
   }
 }

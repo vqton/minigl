@@ -627,8 +627,26 @@ class $CategoriesTable extends Categories
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
+  @override
+  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
+    'icon',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, type, icon];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -652,6 +670,22 @@ class $CategoriesTable extends Categories
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('icon')) {
+      context.handle(
+        _iconMeta,
+        icon.isAcceptableOrUnknown(data['icon']!, _iconMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_iconMeta);
+    }
     return context;
   }
 
@@ -671,6 +705,16 @@ class $CategoriesTable extends Categories
             DriftSqlType.string,
             data['${effectivePrefix}name'],
           )!,
+      type:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}type'],
+          )!,
+      icon:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}icon'],
+          )!,
     );
   }
 
@@ -683,17 +727,31 @@ class $CategoriesTable extends Categories
 class Category extends DataClass implements Insertable<Category> {
   final int id;
   final String name;
-  const Category({required this.id, required this.name});
+  final String type;
+  final String icon;
+  const Category({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.icon,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    map['type'] = Variable<String>(type);
+    map['icon'] = Variable<String>(icon);
     return map;
   }
 
   CategoriesCompanion toCompanion(bool nullToAbsent) {
-    return CategoriesCompanion(id: Value(id), name: Value(name));
+    return CategoriesCompanion(
+      id: Value(id),
+      name: Value(name),
+      type: Value(type),
+      icon: Value(icon),
+    );
   }
 
   factory Category.fromJson(
@@ -704,6 +762,8 @@ class Category extends DataClass implements Insertable<Category> {
     return Category(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      type: serializer.fromJson<String>(json['type']),
+      icon: serializer.fromJson<String>(json['icon']),
     );
   }
   @override
@@ -712,15 +772,24 @@ class Category extends DataClass implements Insertable<Category> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'type': serializer.toJson<String>(type),
+      'icon': serializer.toJson<String>(icon),
     };
   }
 
-  Category copyWith({int? id, String? name}) =>
-      Category(id: id ?? this.id, name: name ?? this.name);
+  Category copyWith({int? id, String? name, String? type, String? icon}) =>
+      Category(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        type: type ?? this.type,
+        icon: icon ?? this.icon,
+      );
   Category copyWithCompanion(CategoriesCompanion data) {
     return Category(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      type: data.type.present ? data.type.value : this.type,
+      icon: data.icon.present ? data.icon.value : this.icon,
     );
   }
 
@@ -728,42 +797,70 @@ class Category extends DataClass implements Insertable<Category> {
   String toString() {
     return (StringBuffer('Category(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('icon: $icon')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, type, icon);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Category && other.id == this.id && other.name == this.name);
+      (other is Category &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.type == this.type &&
+          other.icon == this.icon);
 }
 
 class CategoriesCompanion extends UpdateCompanion<Category> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> type;
+  final Value<String> icon;
   const CategoriesCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.type = const Value.absent(),
+    this.icon = const Value.absent(),
   });
   CategoriesCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-  }) : name = Value(name);
+    required String type,
+    required String icon,
+  }) : name = Value(name),
+       type = Value(type),
+       icon = Value(icon);
   static Insertable<Category> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<String>? type,
+    Expression<String>? icon,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (type != null) 'type': type,
+      if (icon != null) 'icon': icon,
     });
   }
 
-  CategoriesCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return CategoriesCompanion(id: id ?? this.id, name: name ?? this.name);
+  CategoriesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String>? type,
+    Value<String>? icon,
+  }) {
+    return CategoriesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      icon: icon ?? this.icon,
+    );
   }
 
   @override
@@ -775,6 +872,12 @@ class CategoriesCompanion extends UpdateCompanion<Category> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (icon.present) {
+      map['icon'] = Variable<String>(icon.value);
+    }
     return map;
   }
 
@@ -782,7 +885,9 @@ class CategoriesCompanion extends UpdateCompanion<Category> {
   String toString() {
     return (StringBuffer('CategoriesCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('icon: $icon')
           ..write(')'))
         .toString();
   }
@@ -1162,9 +1267,19 @@ typedef $$BudgetsTableProcessedTableManager =
       PrefetchHooks Function()
     >;
 typedef $$CategoriesTableCreateCompanionBuilder =
-    CategoriesCompanion Function({Value<int> id, required String name});
+    CategoriesCompanion Function({
+      Value<int> id,
+      required String name,
+      required String type,
+      required String icon,
+    });
 typedef $$CategoriesTableUpdateCompanionBuilder =
-    CategoriesCompanion Function({Value<int> id, Value<String> name});
+    CategoriesCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String> type,
+      Value<String> icon,
+    });
 
 class $$CategoriesTableFilterComposer
     extends Composer<_$AppDatabase, $CategoriesTable> {
@@ -1182,6 +1297,16 @@ class $$CategoriesTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get icon => $composableBuilder(
+    column: $table.icon,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1204,6 +1329,16 @@ class $$CategoriesTableOrderingComposer
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get icon => $composableBuilder(
+    column: $table.icon,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$CategoriesTableAnnotationComposer
@@ -1220,6 +1355,12 @@ class $$CategoriesTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get icon =>
+      $composableBuilder(column: $table.icon, builder: (column) => column);
 }
 
 class $$CategoriesTableTableManager
@@ -1252,10 +1393,26 @@ class $$CategoriesTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
-              }) => CategoriesCompanion(id: id, name: name),
+                Value<String> type = const Value.absent(),
+                Value<String> icon = const Value.absent(),
+              }) => CategoriesCompanion(
+                id: id,
+                name: name,
+                type: type,
+                icon: icon,
+              ),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String name}) =>
-                  CategoriesCompanion.insert(id: id, name: name),
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                required String type,
+                required String icon,
+              }) => CategoriesCompanion.insert(
+                id: id,
+                name: name,
+                type: type,
+                icon: icon,
+              ),
           withReferenceMapper:
               (p0) =>
                   p0
