@@ -136,7 +136,7 @@ class DashboardScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Colors.tealAccent.withOpacity(0.2),
+                      backgroundColor: Colors.tealAccent.withValues(alpha: 0.2),
                       child: Icon(Icons.shopping_bag, color: Colors.tealAccent),
                     ),
                     title: Text('Transaction ${index + 1}', style: const TextStyle(color: Colors.white)),

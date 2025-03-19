@@ -7,6 +7,7 @@ import '../bloc/budget/budget_state.dart';
 import '../models/budget_model.dart';
 
 class BudgetScreen extends StatelessWidget {
+  const BudgetScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +84,13 @@ class BudgetScreen extends StatelessWidget {
               onPressed: () {
                 final newBudget = Budget(
                   id: DateTime.now().millisecondsSinceEpoch,
+                  name:
+                      categoryController
+                          .text, // ✅ Use category as name (or ask user)
                   category: categoryController.text,
                   amount: double.parse(amountController.text),
                   spent: 0,
+                  startDate: DateTime.now(),
                 );
                 context.read<BudgetBloc>().add(AddBudget(newBudget));
                 Navigator.pop(context);

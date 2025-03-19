@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TransactionBloc()),
-        BlocProvider(create: (_) => BudgetBloc()),
+        BlocProvider(create: (_) => BudgetBloc(appDatabase)),
         BlocProvider(create: (_) => CategoryBloc(appDatabase)),
       ],
       child: MaterialApp.router(

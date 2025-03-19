@@ -3,13 +3,11 @@ import 'package:go_router/go_router.dart';
 import '../core/theme.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Dashboard"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text("Dashboard"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -17,16 +15,31 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Balance Overview
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               elevation: 4,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Total Balance", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    Text(
+                      "Total Balance",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     SizedBox(height: 8),
-                    Text("\$12,450.00", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primaryColor)),
+                    Text(
+                      "\$12,450.00",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primaryColor,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -46,14 +59,21 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 16),
 
             // Recent Transactions
-            Text("Recent Transactions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              "Recent Transactions",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 8),
             Expanded(
               child: ListView(
                 children: [
                   _buildTransactionItem("Groceries", "-\$120.00", Colors.red),
                   _buildTransactionItem("Salary", "+\$2,000.00", Colors.green),
-                  _buildTransactionItem("Electric Bill", "-\$60.00", Colors.red),
+                  _buildTransactionItem(
+                    "Electric Bill",
+                    "-\$60.00",
+                    Colors.red,
+                  ),
                 ],
               ),
             ),
@@ -84,9 +104,19 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-              Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
               SizedBox(height: 4),
-              Text(amount, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color)),
+              Text(
+                amount,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
             ],
           ),
         ),
@@ -101,7 +131,10 @@ class HomeScreen extends StatelessWidget {
       elevation: 2,
       child: ListTile(
         title: Text(title, style: TextStyle(fontWeight: FontWeight.w500)),
-        trailing: Text(amount, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
+        trailing: Text(
+          amount,
+          style: TextStyle(fontWeight: FontWeight.bold, color: color),
+        ),
       ),
     );
   }

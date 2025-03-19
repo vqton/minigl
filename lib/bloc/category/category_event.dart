@@ -43,3 +43,6 @@ class EditCategory extends CategoryEvent {
   @override
   List<Object> get props => [category];
 }
+
+// ✅ New event to clear all categories
+class ClearCategories extends CategoryEvent {}

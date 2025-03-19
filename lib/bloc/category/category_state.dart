@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:minigl/models/category_model.dart';
 
-
 abstract class CategoryState extends Equatable {
   @override
   List<Object> get props => [];
@@ -9,6 +8,9 @@ abstract class CategoryState extends Equatable {
 
 // Initial State
 class CategoryInitial extends CategoryState {}
+
+// ✅ Loading State (Fix the error)
+class CategoryLoading extends CategoryState {}  
 
 // Categories Loaded
 class CategoryLoaded extends CategoryState {
