@@ -1,50 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
-class Transaction extends Equatable {
-  final int id;
-  final String category;
-  final double amount;
-  final DateTime date;
-  final String type; // "income" or "expense"
+@Entity()
+class Transaction {
+  @Id()
+  int id = 0;
 
-  const Transaction({
-    required this.id,
+  String category;
+  double amount;
+
+  @Property(type: PropertyType.date) // ✅ Explicitly define DateTime storage
+  DateTime date;
+
+  String type; // "income" or "expense"
+
+  Transaction({
+    this.id = 0,
     required this.category,
     required this.amount,
     required this.date,
     required this.type,
   });
-
-  Transaction copyWith({double? amount}) {
-    return Transaction(
-      id: id,
-      category: category,
-      amount: amount ?? this.amount,
-      date: date,
-      type: type,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'category': category,
-      'amount': amount,
-      'date': date.toIso8601String(),
-      'type': type,
-    };
-  }
-
-  factory Transaction.fromJson(Map<String, dynamic> json) {
-    return Transaction(
-      id: json['id'],
-      category: json['category'],
-      amount: json['amount'],
-      date: DateTime.parse(json['date']),
-      type: json['type'],
-    );
-  }
-
-  @override
-  List<Object> get props => [id, category, amount, date, type];
 }

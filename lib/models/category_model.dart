@@ -1,15 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
-class Category extends Equatable {
-  final int id;
-  final String name;
-  final String type; // "income" or "expense"
-  final String? icon; // Icon data (could be asset name or emoji)
-  final int color; // Store color as an integer (ARGB value)
-  final double? budget; // Optional budget limit
+@Entity()
+class Category {
+  @Id()
+  int id; // ObjectBox requires @Id() annotation for primary keys
 
-  const Category({
-    required this.id,
+  String name;
+  String type; // "income" or "expense"
+  String? icon; // Nullable string for asset name or emoji
+  int color; // Stored as an ARGB integer
+  double? budget; // Optional budget limit
+
+  Category({
+    this.id = 0, // Default to 0; ObjectBox auto-generates IDs
     required this.name,
     required this.type,
     this.icon,
@@ -32,17 +35,14 @@ class Category extends Equatable {
   // Create a Category from JSON
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id'],
+      id: json['id'] ?? 0, // Default to 0 for ObjectBox auto-ID
       name: json['name'],
       type: json['type'],
       icon: json['icon'],
       color: json['color'],
-      budget: (json['budget'] as num?)?.toDouble(), // Ensure budget is double
+      budget: (json['budget'] as num?)?.toDouble(),
     );
   }
-
-  @override
-  List<Object?> get props => [id, name, type, icon, color, budget];
 
   // Copy with method for updating properties
   Category copyWith({
