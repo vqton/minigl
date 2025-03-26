@@ -6,13 +6,13 @@ abstract class CategoryState extends Equatable {
   List<Object> get props => [];
 }
 
-// Initial State
+// 🟡 Initial State (Before categories are fetched)
 class CategoryInitial extends CategoryState {}
 
-// ✅ Loading State (Fix the error)
+// 🔄 Loading State
 class CategoryLoading extends CategoryState {}  
 
-// Categories Loaded
+// ✅ Loaded State (After fetching categories from ObjectBox)
 class CategoryLoaded extends CategoryState {
   final List<Category> categories;
   CategoryLoaded(this.categories);
@@ -21,7 +21,7 @@ class CategoryLoaded extends CategoryState {
   List<Object> get props => [categories];
 }
 
-// Error State
+// ❌ Error State (If fetching fails)
 class CategoryError extends CategoryState {
   final String message;
   CategoryError(this.message);
@@ -29,3 +29,6 @@ class CategoryError extends CategoryState {
   @override
   List<Object> get props => [message];
 }
+
+// 🚫 Empty State (When no categories exist)
+class CategoryEmpty extends CategoryState {}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:minigl/widgets/dashboard/bottom_navigation.dart';
+import 'package:minigl/widgets/exit_button.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -13,6 +14,7 @@ class DashboardScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color(0xFF232F3E), // Amazon dark blue
         elevation: 1,
+         actions: const [ExitButton()],
       ),
       backgroundColor: Color(0xFF232F3E), // Amazon dark blue
       body: Padding(
