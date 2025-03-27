@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:minigl/widgets/exit_button.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});

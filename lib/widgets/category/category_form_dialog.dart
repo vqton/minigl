@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:minigl/bloc/category/category_bloc.dart';
 import 'package:minigl/bloc/category/category_event.dart';
+import 'package:minigl/core/utils.dart';
 import 'package:minigl/models/category_model.dart';
 
 class CategoryFormDialog extends StatefulWidget {
@@ -21,6 +22,25 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
   IconData _icon = Icons.category;
   Color _selectedColor = Colors.blueAccent;
   final Logger logger = Logger();
+
+  final Map<String, IconData> iconMap = {
+    "account_balance": Icons.account_balance,
+    "credit_card": Icons.credit_card,
+    "local_atm": Icons.local_atm,
+    "account_balance_wallet": Icons.account_balance_wallet,
+    "work_outline": Icons.work_outline,
+    "request_page": Icons.request_page,
+    "receipt": Icons.receipt,
+    "payment": Icons.payment,
+    "trending_up": Icons.trending_up,
+    "show_chart": Icons.show_chart,
+    "pie_chart": Icons.pie_chart,
+    "savings": Icons.savings,
+    "shopping_cart": Icons.shopping_cart,
+    "restaurant": Icons.restaurant,
+    "directions_car": Icons.directions_car,
+    "local_gas_station": Icons.local_gas_station,
+  };
 
   final Map<String, Color> _defaultColors = {
     "income": Color(0xFF00A65A),
@@ -266,7 +286,7 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
       builder: (context) {
@@ -275,8 +295,8 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                "Choose an Icon",
+              const Text(
+                "Choose Financial Icon",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -284,36 +304,52 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
                 ),
               ),
               const SizedBox(height: 16),
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 5,
-                children:
-                    [
-                      Icons.shopping_basket,
-                      Icons.account_balance_wallet,
-                      Icons.directions_car,
-                      Icons.restaurant,
-                      Icons.home,
-                      Icons.attach_money,
-                      Icons.work,
-                      Icons.health_and_safety,
-                      Icons.school,
-                      Icons.savings,
-                    ].map((icon) {
-                      return IconButton(
-                        icon: Icon(icon, size: 24, color: _selectedColor),
-                        onPressed: () {
-                          setState(() => _icon = icon);
-                          Navigator.pop(context);
-                        },
-                      );
-                    }).toList(),
-              ),
+              _buildIconGrid(),
             ],
           ),
         );
       },
     );
+  }
+
+  /// Modular function to build the icon grid
+  Widget _buildIconGrid() {
+    return FutureBuilder<Map<String, IconData>>(
+      future: IconService.loadIcons(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final iconMap = snapshot.data!;
+        final iconNames = iconMap.keys.toList();
+
+        return GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 6,
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8,
+          ),
+          itemCount: iconNames.length,
+          itemBuilder: (context, index) {
+            final iconName = iconNames[index];
+            final icon = iconMap[iconName]!;
+
+            return IconButton(
+              icon: Icon(icon, size: 28, color: _selectedColor),
+              onPressed: () => _onIconSelected(icon),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  /// Function to handle icon selection
+  void _onIconSelected(IconData icon) {
+    setState(() => _icon = icon);
+    Navigator.pop(context);
   }
 
   void _saveCategory() {
