@@ -87,10 +87,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
         );
 
         return ListTile(
-          leading: Text(
-            category.icon ?? "📌",
-            style: const TextStyle(fontSize: 24),
-          ),
+          leading:
+              category.icon != null
+                  ? Icon(
+                    IconData(
+                      int.parse(category.icon!),
+                      fontFamily: 'MaterialIcons',
+                    ),
+                    color: Color(category.color),
+                  )
+                  : const Icon(Icons.category, color: Colors.grey),
+
           title: Text(category.name),
           subtitle: Text(category.type.toUpperCase()),
           trailing: Row(
@@ -98,7 +105,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
             children: [
               IconButton(
                 icon: const Icon(Icons.edit, color: Colors.blue),
-                onPressed: () => _showCategoryFormDialog(context, category: category),
+                onPressed:
+                    () => _showCategoryFormDialog(context, category: category),
               ),
               IconButton(
                 icon: const Icon(Icons.delete, color: Colors.red),
@@ -114,10 +122,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void _showCategoryFormDialog(BuildContext context, {Category? category}) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(category == null ? "Add Category" : "Edit Category"),
-        content: CategoryFormDialog(category: category),
-      ),
+      builder:
+          (context) => AlertDialog(
+            title: Text(category == null ? "Add Category" : "Edit Category"),
+            content: CategoryFormDialog(category: category),
+          ),
     );
   }
 

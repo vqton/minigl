@@ -79,6 +79,11 @@ class BottomNavigation extends StatelessWidget {
               onTap: () => context.go('/accounts'),
             ),
             ListTile(
+              leading: Icon(Icons.category),
+              title: Text("Manage Categories"), // Added category management
+              onTap: () => context.go('/categories'),
+            ),
+            ListTile(
               leading: Icon(Icons.settings),
               title: Text("Settings"),
               onTap: () => context.go('/settings'),

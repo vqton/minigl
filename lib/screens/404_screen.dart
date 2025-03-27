@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:minigl/widgets/exit_button.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});
@@ -9,6 +10,7 @@ class NotFoundPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('404 - Page Not Found'),
+        
       ),
       body: Center(
         child: Column(
@@ -34,11 +36,11 @@ class NotFoundPage extends StatelessWidget {
               onPressed: () {
                 context.go('/');
               },
-              child: Text('Return to Home Page'),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 textStyle: TextStyle(fontSize: 18),
               ),
+              child: Text('Return to Home Page'),
             ),
           ],
         ),

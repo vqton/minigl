@@ -49,6 +49,7 @@ dependencies:
   reorderables: ^0.6.0
   objectbox: ^4.1.0
   objectbox_flutter_libs: ^4.1.0
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
