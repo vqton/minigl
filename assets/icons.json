@@ -1,0 +1,58 @@
+[
+  {
+    "category": "Banking & Accounts",
+    "icons": ["account_balance", "credit_card", "local_atm", "account_balance_wallet", "savings", "attach_money", "monetization_on"]
+  },
+  {
+    "category": "Income & Payments",
+    "icons": ["work_outline", "request_page", "receipt", "payment", "trending_up", "show_chart", "pie_chart", "account_balance_wallet"]
+  },
+  {
+    "category": "Shopping & Expenses",
+    "icons": ["shopping_cart", "local_mall", "store", "shopping_bag", "local_offer", "sell", "redeem"]
+  },
+  {
+    "category": "Food & Dining",
+    "icons": ["restaurant", "fastfood", "local_cafe", "emoji_food_beverage", "bakery_dining", "brunch_dining", "icecream"]
+  },
+  {
+    "category": "Transportation",
+    "icons": ["directions_car", "directions_bus", "two_wheeler", "train", "local_shipping", "airport_shuttle", "electric_car"]
+  },
+  {
+    "category": "Housing & Utilities",
+    "icons": ["home", "apartment", "house", "real_estate_agent", "lightbulb", "thermostat", "water_drop"]
+  },
+  {
+    "category": "Entertainment & Leisure",
+    "icons": ["sports_esports", "movie", "theater_comedy", "music_note", "videogame_asset", "sports_soccer", "casino"]
+  },
+  {
+    "category": "Health & Wellness",
+    "icons": ["local_hospital", "medical_services", "healing", "fitness_center", "self_improvement", "spa"]
+  },
+  {
+    "category": "Education & Learning",
+    "icons": ["school", "menu_book", "auto_stories", "cast_for_education", "science", "calculate"]
+  },
+  {
+    "category": "Personal Care",
+    "icons": ["face", "brush", "content_cut", "dry_cleaning", "local_laundry_service", "spa"]
+  },
+  {
+    "category": "Travel & Vacation",
+    "icons": ["flight", "luggage", "hotel", "directions_boat", "hiking", "beach_access"]
+  },
+  {
+    "category": "Investments & Savings",
+    "icons": ["trending_up", "show_chart", "pie_chart", "monetization_on", "savings", "attach_money"]
+  },
+  {
+    "category": "Insurance & Security",
+    "icons": ["security", "verified_user", "policy", "shield"]
+  },
+  {
+    "category": "Gifts & Donations",
+    "icons": ["volunteer_activism", "redeem", "card_giftcard", "favorite"]
+  }
+]
