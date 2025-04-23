@@ -45,6 +45,7 @@ dependencies:
   flutter_bloc: ^9.1.0
   get_it: ^8.0.3
   icons_flutter: ^0.0.5
+  currency_formatter: ^2.2.3
 
 dev_dependencies:
   flutter_test:
